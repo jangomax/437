@@ -1,0 +1,15 @@
+body {
+  background-color: #1c2333;
+  color: #e3dccc;
+  font-family: "Barlow", Helvetica, Arial, sans-serif;
+}
+
+header {
+  background-color: #14a3fa;
+  color: #1c2333;
+  font-family: "EB Garamond", serif;
+}
+
+a {
+  color: #dd4056;
+}
