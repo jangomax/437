@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/page.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <script type="module" src="/js/html-loader.js"></script>
+    <script>
+      const parser = new DOMParser();
+
+      function loadHTML(href, container) {
+        console.log("Loading HTML Fragment:", href, container);
+
+        fetch(href)
+          .then((response) => {
+            if (response.status !== 200) {
+              throw `Status: ${response.status}`;
+            }
+            return response.text();
+          })
+          .then((htmlString) => {
+            const doc = parser.parseFromString(
+              htmlString,
+              "text/html"
+            );
+
+            console.log("html: ", doc);
+            const article = doc.body.firstChild;
+            container.replaceChildren(article);
+          })
+          .catch((error) => {
+            const message = document.createTextNode(
+              `Failed to fetch ${href}: ${error}`
+            );
+
+            container.append(message);
+          });
+      }
+    </script>
+    <script type="module">
+      import { relayEvent } from "/js/relay-event.js";
+
+      window.relayEvent = relayEvent;
+    </script>
+    <script type="module">
+      function toggleDarkMode(page, checked) {
+        page.classList.toggle("light-mode", checked);
+      }
+
+      document.body.addEventListener("light-mode", (event) =>
+        toggleDarkMode(
+          event.currentTarget,
+          event.detail.checked
+        )
+      );
+    </script>
+
   </head>
-  <body>
+  <body class="page">
     <header>
       <h1>SalarySheet</h1>
       <h2>BigCorpoCompany</h2>
+      <label
+          onchange="relayEvent(
+          event, 
+          'light-mode', 
+          {checked: event.target.checked})">
+          <input type="checkbox" autocomplete="off" /> Dark mode
+        </label>
     </header>
 
     <section>
@@ -22,10 +80,9 @@
     <section>
       <h2>Roles</h2>
       <ul>
-        <li><a href="role/backend-software-engineer.html">Backend Engineer</a></li>
-        <li><a href="role/role.html">Software Engineer</a></li>
-        <li><a href="role/role.html">Software Engineer</a></li>
-        <li><a href="role/role.html">Software Engineer</a></li>
+        <li><a onclick="loadHTML('role/backend-software-engineer.html', event.target.closest('a'))">Backend Engineer</a></li>
+        <li><a onclick="loadHTML('role/frontend-engineer.html', event.target.closest('a'))">Frontend Engineer</a></li>
+        <li><a onclick="loadHTML('role/security-guard.html', event.target.closest('a'))">Corporate Security</a></li>
       </ul>
     </section>
 
