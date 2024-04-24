@@ -1,0 +1,21 @@
+:root {
+  --color-dark: rgb(28 35 51);
+  --color-light: rgb(227 220 204);
+  --color-accent-1: rgb(221 64 66);
+  --color-accent-2: rgb(20 164 250);
+  --color-background-page: var(--color-dark);
+  --color-text: var(--color-light);
+
+  --size-type-xxlarge: 2.5rem;
+  --size-type-xlarge: 2rem;
+  --size-type-large: 1.5rem;
+  --size-type-mlarge: 1.25rem;
+  --size-type-body: 1rem;
+
+  --size-spacing-small: 0.25rem;
+  --size-spacing-medium: 0.5rem;
+  --size-spacing-large: 1rem;
+
+  --body-font-family: "Barlow", Helvetica, Arial, sans-serif;
+  --display-font-family: "EB Garamond", serif;
+}

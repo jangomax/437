@@ -1,15 +1,30 @@
 body {
-  background-color: #1c2333;
-  color: #e3dccc;
-  font-family: "Barlow", Helvetica, Arial, sans-serif;
+  background-color: var(--color-background-page);
+  color: var(--color-text);
+  font-family: var(--body-font-family)
 }
 
-header {
-  background-color: #14a3fa;
-  color: #1c2333;
-  font-family: "EB Garamond", serif;
+header > * {
+  background-color: var(--color-accent-2);
+  color: var(--color-dark);
+  padding-right: var(--size-spacing-medium);
+  font-family: var(--display-font-family);
+}
+
+h1, h2 {
+  padding: var(--size-spacing-small);
+}
+
+h1 {
+  font-size: var(--size-type-xlarge);
+  line-height: 1;
+  font-weight: var(--font-weight-bold);
+}
+h2 {
+  font-size: var(--size-type-large);
+  font-weight: var(--font-weight-bold);
 }
 
 a {
-  color: #dd4056;
+  color: var(--color-accent-1);
 }
