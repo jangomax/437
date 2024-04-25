@@ -3,10 +3,13 @@
   <head>
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/location.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+
     <script type="module" src="/js/html-loader.js"></script>
     <script type="module" src="/js/drop-down.js"></script>
     <script>
@@ -60,10 +63,10 @@
     </script>
 
   </head>
-  <body class="page">
+  <body>
     <header>
-      <h1>SalarySheet</h1>
-      <h2>BigCorpoCompany</h2>
+      <h1><a href="../index.html">BigCorpoCompany</a></h1>
+      <h2>San Luis Obispo</h2>
       <drop-down>
         <label
           onchange="relayEvent(
@@ -74,28 +77,26 @@
         </label>
       </drop-down>
     </header>
-
-    <section>
-      <h2>Industry</h2>
-      <p>Servers as a Service</p>
-    </section>
-
-    <section>
-      <h2>Roles</h2>
-      <ul>
-        <li><a onclick="loadHTML('role/backend-software-engineer.html', event.target.closest('a'))">Backend Engineer</a></li>
-        <li><a onclick="loadHTML('role/frontend-engineer.html', event.target.closest('a'))">Frontend Engineer</a></li>
-        <li><a onclick="loadHTML('role/security-guard.html', event.target.closest('a'))">Corporate Security</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Locations</h2>
-      <ul>
-        <li><a href="location/slo.html">San Luis Obispo</a></li>
-        <li><a href="location/slo.html">Location 2</a></li>
-        <li><a href="location/slo.html">Location 3</a></li>
-      </ul>
-    </section>
+    <img
+      class="featured"
+      src="../images/bishop.jpeg"
+    />
+    <article class="location">
+      <section>
+        <h3>Information</h3>
+        <dl>
+          <dt>Num. Employees</dt>
+          <dd>132</dd>
+          <dt>Amenities</dt>
+          <dd>Cafe, Game Room</dd>
+        </dl>
+      </section>
+      <section>
+        <h3>Available Roles</h3>
+        <ul>
+          <li><a onclick="loadHTML('../role/backend-software-engineer.html', event.target.closest('a'))">Backend Engineer</a></li>
+        </ul>
+      </section>
+    </article>
   </body>
 </html>

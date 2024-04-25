@@ -1,0 +1,35 @@
+.location {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three columns layout */
+  align-items: start; /* Align items to the start of the grid */
+  gap: var(--size-spacing-medium);
+}
+
+img.featured {
+  max-width: 40%;
+  margin: var(--size-spacing-large);
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any default inline styles */
+}
+
+article {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout */
+  grid-template-rows: auto auto; /* Auto-sized rows */
+  gap: var(--size-spacing-medium); /* Gap between grid items */
+}
+
+article > * {
+  margin-left: var(--size-spacing-large);
+}
+
+section {
+  display: grid;
+  grid-template-columns: 1fr; 
+  grid-template-rows: auto auto;
+  gap: var(--size-spacing-medium);
+}
+
+dd {
+  padding-left: var(--size-spacing-medium);
+}

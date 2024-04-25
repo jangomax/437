@@ -11,6 +11,11 @@ header > * {
   font-family: var(--display-font-family);
 }
 
+drop-down {
+  /* align-self: flex-end; */
+  margin-left: auto;
+}
+
 /* h1, h2 {
   padding: var(--size-spacing-small);
 } */
@@ -21,6 +26,17 @@ header > * {
   justify-content: left;
   padding: var(--size-spacing-medium);
 } */
+
+
+header {
+  display: flex;
+  justify-content: space-between; /* Align items to the start and end of the header */
+  align-items: center; /* Center items vertically */
+  background-color: var(--color-accent-2);
+  color: var(--color-dark);
+  font-family: var(--display-font-family);
+  padding: 0; /* Remove padding */
+}
 
 h1 {
   font-size: var(--size-type-xlarge);
