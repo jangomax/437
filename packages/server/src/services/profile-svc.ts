@@ -1,34 +1,38 @@
+import { Schema, Model, Document, model } from "mongoose";
 import { Profile } from "../models/profile";
 
-let profiles: Array<Profile> = [
+const ProfileSchema = new Schema<Profile>(
   {
-    id: "blaze",
-    name: "Blaze Pasquale",
-    nickname: undefined,
-    home: "Oakland, CA",
-    jobs: [],
-    avatar: "/data/avatars/Blaze Pasquale.png"
+    id: { type: String, required: true, trim: true },
+    name: { type: String, required: true, trim: true },
+    nickname: { type: String },
+    home: { type: String },
+    jobs: [String],
+    avatar: { type: String }
   },
   {
-    id: "daver",
-    name: "David Davey",
-    nickname: undefined,
-    home: "Vallejo, CA",
-    jobs: [],
-    avatar: "/data/avatars/Blaze Pasquale.png"
-  },
-  {
-    id: "tim",
-    name: "Timothy",
-    nickname: "t1m",
-    home: "Emeryville, CA",
-    jobs: [],
-    avatar: "/data/avatars/Blaze Pasquale.png"
-  },
-];
+    collection: "user_profiles"
+  }
+);
 
-export function get(id: String): Profile | undefined {
-  return profiles.find((t) => t.id === id);
+const ProfileModel = model<Profile>("Profile", ProfileSchema);
+
+function index(): Promise<Profile[]> {
+  return ProfileModel.find();
 }
 
-export default { get };
+function get(id: String): Promise<Profile> {
+  return ProfileModel.find({ id })
+    .then((list) => list[0])
+    .catch((err) => {
+      throw `${id} Not Found`;
+    });
+}
+
+function create(profile: Profile): Promise<Profile> {
+  const p = new ProfileModel(profile);
+  return p.save();
+}
+
+export default { index, get, create };
+
