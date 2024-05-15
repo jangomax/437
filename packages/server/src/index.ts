@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 import { connect } from "./services/mongo";
 import profiles from "./routes/profiles";
 
@@ -10,6 +11,7 @@ connect("salarysheet");
 
 app.use(express.static(staticDir));
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/profiles", profiles);
 

@@ -1,5 +1,5 @@
 export class HtmlFragmentElement extends HTMLElement {
-  connectedCallback() {
+  connectedCallBack() {
     const href = this.getAttribute("href");
     const open = this.hasAttribute("open");
 
@@ -35,7 +35,7 @@ export function loadHTML(href, container) {
 
 const parser = new DOMParser();
 
-function addFragment(htmlString, container) {
+export function addFragment(htmlString, container) {
   const doc = parser.parseFromString(htmlString, "text/html");
   const fragment = Array.from(doc.body.childNodes);
 
