@@ -30,5 +30,15 @@ router.get("/", (req: Request, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
+router.put("/:userid", (req: Request, res: Response) => {
+  const { userid } = req.params;
+  const newProfile = req.body;
+
+  profiles
+    .update(userid, newProfile)
+    .then((profile: Profile) => res.json(profile))
+    .catch((err) => res.status(404).end())
+})
+
 export default router;
 

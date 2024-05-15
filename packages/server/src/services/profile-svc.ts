@@ -34,5 +34,27 @@ function create(profile: Profile): Promise<Profile> {
   return p.save();
 }
 
-export default { index, get, create };
+function update(
+  id: String,
+  profile: Profile
+): Promise<Profile> {
+return ProfileModel.findOne({ id })
+  .then((found) => {
+    if (!found) throw `${id} Not Found`;
+    else
+      return ProfileModel.findByIdAndUpdate(
+        found._id,
+        profile,
+        {
+          new: true
+        }
+      );
+  })
+  .then((updated) => {
+    if (!updated) throw `${id} not updated`;
+    else return updated as Profile;
+  });
+}
+
+export default { index, get, create, update };
 
