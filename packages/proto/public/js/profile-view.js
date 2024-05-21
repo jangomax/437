@@ -1,5 +1,8 @@
 import { prepareTemplate } from "./template.js";
 import { loadJSON } from "./json-loader.js";
+import { Auth, Observer } from "@calpoly/mustang";
+import "./restful-form.js";
+import "./input-array.js";
 
 export class ProfileViewElement extends HTMLElement {
   static observedAttributes = ["src", "mode"];
@@ -151,9 +154,9 @@ export class ProfileViewElement extends HTMLElement {
           <input name="home" />
         </label>
         <label>
-          <span>Jobs</span>
+          <span>Airports</span>
           <input-array name="jobs">
-            <span slot="label-add">Add a job</span>
+            <span slot="label-add">Add an airport</span>
           </input-array>
         </label>
         <label>
@@ -172,7 +175,7 @@ export class ProfileViewElement extends HTMLElement {
         <dd><slot name="nickname"></slot></dd>
         <dt>Home City</dt>
         <dd><slot name="home"></slot></dd>
-        <dt>Jobs</dt>
+        <dt>Airports</dt>
         <dd><slot name="jobs"></slot></dd>
       </dl>
     </section>
@@ -224,11 +227,50 @@ export class ProfileViewElement extends HTMLElement {
     this.addEventListener("restful-form:updated", (event) => {
       console.log("Updated a profile", event.detail);
       this.mode = "view";
-      loadJSON(this.src, this, renderSlots);
+      console.log("LOading JSON", this.authorization);
+      loadJSON(this.src, this, renderSlots, this.authorization);
     });
   }
 
-  connectedCallback() {}
+  _authObserver = new Observer(this, "salarysheet:auth");
+
+  get authorization() {
+    console.log("Authorization for user, ", this._user);
+    return (
+      this._user?.authenticated && {
+        Authorization: `Bearer ${this._user.token}`
+      }
+    );
+  }
+
+  connectedCallback() {
+    this._authObserver.observe(({ user }) => {
+      console.log("Setting user as effect of change", user);
+      this._user = user;
+      if (this.src) {
+        console.log("LOading JSON", this.authorization);
+        loadJSON(
+          this.src,
+          this,
+          renderSlots,
+          this.authorization
+        ).catch((error) => {
+          const { status } = error;
+          if (status === 401) {
+            const message = new CustomEvent("auth:message", {
+              bubbles: true,
+              composed: true,
+              detail: ["auth/redirect"]
+            });
+            console.log("Dispatching", message);
+            this.dispatchEvent(message);
+          } else {
+            console.log("Error:", error);
+          }
+        });
+      }
+    });
+  }
 
   attributeChangedCallback(name, oldValue, newValue) {
     console.log(
@@ -237,9 +279,18 @@ export class ProfileViewElement extends HTMLElement {
     );
     switch (name) {
       case "src":
-        if (newValue && this.mode !== "new") {
-          console.log("LOading JSON");
-          loadJSON(this.src, this, renderSlots);
+        if (
+          newValue &&
+          this.mode !== "new" &&
+          this.authorization
+        ) {
+          console.log("Loading JSON", this.authorization);
+          loadJSON(
+            this.src,
+            this,
+            renderSlots,
+            this.authorization
+          );
         }
         break;
       case "mode":
