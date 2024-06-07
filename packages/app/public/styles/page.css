@@ -1,0 +1,26 @@
+body {
+    font-family: var(--font-family-body);
+    background-color: var(--color-background-page);
+    color: var(--color-text)
+}
+
+h1 h2 h3 {
+    font-family: var(--font-family-heading);
+}
+
+a {
+    color: var(--primary-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form {
+  display: block !important;
+}

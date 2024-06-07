@@ -1,8 +1,8 @@
 export interface Profile {
-  id: string;
+  username: string;
   name: string;
-  nickname: string | undefined;
-  home: string;
-  jobs: Array<String>;
+  bio: string;
+  location: string;
+  skills: Array<String>;
   avatar: string | undefined;
 }

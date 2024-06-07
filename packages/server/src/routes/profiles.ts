@@ -4,11 +4,12 @@ import { Profile } from "../models/profile";
 
 const router = express.Router();
 
-router.get("/:userid", (req: Request, res: Response) => {
-  const { userid } = req.params;
+router.get("/:username", (req: Request, res: Response) => {
+  const { username } = req.params;
+  console.log(`get ${username}`);
 
   profiles
-    .get(userid)
+    .get(username)
     .then((profile: Profile) => res.json(profile))
     .catch((err) => res.status(404).end());
 });
@@ -30,12 +31,12 @@ router.get("/", (req: Request, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
-router.put("/:userid", (req: Request, res: Response) => {
-  const { userid } = req.params;
+router.put("/:username", (req: Request, res: Response) => {
+  const { username } = req.params;
   const newProfile = req.body;
 
   profiles
-    .update(userid, newProfile)
+    .update(username, newProfile)
     .then((profile: Profile) => res.json(profile))
     .catch((err) => res.status(404).end())
 })

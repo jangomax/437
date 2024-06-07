@@ -4,7 +4,7 @@ import { Credential } from "../models/credential";
 
 const credentialSchema = new Schema<Credential>(
   {
-    id: {
+    username: {
       type: String,
       required: true,
       trim: true
@@ -23,12 +23,12 @@ const credentialModel = model<Credential>(
 );
 
 function verify(
-  id: string,
+  username: string,
   password: string
 ): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     credentialModel
-      .find({ id })
+      .find({ username })
       .then((found) => {
         if (found && found.length === 1) return found[0];
         else reject("Invalid username or password");
@@ -42,9 +42,9 @@ function verify(
               console.log(
                 "Verified",
                 result,
-                credsOnFile.id
+                credsOnFile.username
               );
-              if (result) resolve(credsOnFile.id);
+              if (result) resolve(username); //credsonfile.id
               else reject("Invalid username or password");
             }
           );
@@ -53,23 +53,23 @@ function verify(
   });
 }
 
-function checkExists(id: string) {
+function checkExists(username: string) {
   return new Promise<boolean>((resolve, reject) => {
     credentialModel
-      .find({ id })
+      .find({ username })
       .then((found) => resolve(found && found.length > 0));
   });
 }
 
-function create(id: string, password: string) {
+function create(username: string, password: string) {
   return new Promise<Credential>((resolve, reject) => {
-    if (!id || !password) {
-      reject("must provide id and password");
+    if (!username || !password) {
+      reject("must provide username and password");
     }
     credentialModel
-      .find({ id })
+      .find({ username })
       .then((found: Credential[]) => {
-        if (found.length) reject("id exists");
+        if (found.length) reject("username exists");
       })
       .then(() =>
         bcrypt
@@ -77,10 +77,11 @@ function create(id: string, password: string) {
           .then((salt: string) => bcrypt.hash(password, salt))
           .then((hashedPassword: string) => {
             const creds = new credentialModel({
-              id,
+              username,
               hashedPassword
             });
             creds.save().then((created: Credential) => {
+              console.log(`Created credential <${username}>`);
               if (created) resolve(created);
             });
           })

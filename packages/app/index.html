@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>SalarySheet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <script type="module" src="/src/main"></script>
+</head>
+
+<body>
+    <mu-history provides="blazing:history">
+
+        <mu-auth provides="blazing:auth" redirect="./login">
+            <mu-store provides="blazing:model">
+
+                <blazing-header></blazing-header>
+                <!-- Add a little bit of padding to every view -->
+                <div class="container">
+                    <mu-switch></mu-switch>
+                </div>
+
+            </mu-store>
+        </mu-auth>
+    </mu-history>
+</body>
+
+<style>
+    .container {
+        padding: 1rem
+    }
+</style>

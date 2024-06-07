@@ -3,12 +3,11 @@ import { Profile } from "../models/profile";
 
 const ProfileSchema = new Schema<Profile>(
   {
-    id: { type: String, required: true, trim: true },
+    username: { type: String, required: true, trim: true },
     name: { type: String, required: true, trim: true },
-    nickname: { type: String },
-    home: { type: String },
-    jobs: [String],
-    avatar: { type: String }
+    location: { type: String },
+    bio: { type: String },
+    skills: [String]
   },
   {
     collection: "user_profiles"
@@ -21,11 +20,12 @@ function index(): Promise<Profile[]> {
   return ProfileModel.find();
 }
 
-function get(id: String): Promise<Profile> {
-  return ProfileModel.find({ id })
+function get(username: String): Promise<Profile> {
+  console.log(`Get user <${username}>`);
+  return ProfileModel.find({ username })
     .then((list) => list[0])
     .catch((err) => {
-      throw `${id} Not Found`;
+      throw `${username} Not Found`;
     });
 }
 
@@ -35,12 +35,12 @@ function create(profile: Profile): Promise<Profile> {
 }
 
 function update(
-  id: String,
+  username: String,
   profile: Profile
 ): Promise<Profile> {
-return ProfileModel.findOne({ id })
+return ProfileModel.findOne({ username })
   .then((found) => {
-    if (!found) throw `${id} Not Found`;
+    if (!found) throw `${username} Not Found`;
     else
       return ProfileModel.findByIdAndUpdate(
         found._id,
@@ -51,7 +51,7 @@ return ProfileModel.findOne({ id })
       );
   })
   .then((updated) => {
-    if (!updated) throw `${id} not updated`;
+    if (!updated) throw `${username} not updated`;
     else return updated as Profile;
   });
 }
